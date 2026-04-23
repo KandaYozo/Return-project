@@ -9,24 +9,34 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            height: 100vh;
+            min-height: 100vh;
             overflow-x: hidden;
             transition: all 1s ease;
         }
-        .back-button {
+        .top-bar {
             position: fixed;
             top: 20px;
             left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        .back-button,
+        .learn-button-top {
+            pointer-events: auto;
             background: rgba(255,255,255,0.8);
             border: none;
             padding: 10px 20px;
             border-radius: 25px;
             cursor: pointer;
             font-size: 16px;
-            z-index: 1000;
             transition: all 0.3s ease;
         }
-        .back-button:hover {
+        .back-button:hover,
+        .learn-button-top:hover {
             background: rgba(255,255,255,1);
             transform: scale(1.05);
         }
@@ -181,17 +191,30 @@
 
         /* Ocean theme */
         .ocean {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #2d72b2 0%, #5fcde4 100%);
         }
         .ocean .hero {
             background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1));
         }
         .ocean .content {
-            color: #1e3a8a;
+            color: #093a68;
         }
         .ocean .fact {
             background: rgba(255,255,255,0.95);
-            border-left: 5px solid #667eea;
+            border-left: 5px solid #2d72b2;
+        }
+        .arctic {
+            background: linear-gradient(135deg, #c4e7ff 0%, #5db3e6 100%);
+        }
+        .arctic .hero {
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2));
+        }
+        .arctic .content {
+            color: #12375b;
+        }
+        .arctic .fact {
+            background: rgba(255,255,255,0.95);
+            border-left: 5px solid #5db3e6;
         }
         .ocean .wave {
             position: absolute;
@@ -202,9 +225,44 @@
             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,60 C300,100 600,20 900,60 C1050,80 1200,40 1200,60 L1200,120 L0,120 Z" fill="rgba(255,255,255,0.3)"></path></svg>') repeat-x;
             animation: wave 10s ease-in-out infinite;
         }
-        @keyframes wave {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(-50px); }
+        .ocean .bubble {
+            position: absolute;
+            bottom: 10px;
+            background: rgba(255,255,255,0.35);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255,255,255,0.2);
+            animation: bubble-rise 6s ease-in infinite;
+        }
+        .mountain .cloud,
+        .arctic .cloud {
+            position: absolute;
+            top: 10%;
+            background: rgba(255,255,255,0.85);
+            border-radius: 50px;
+            opacity: 0.7;
+            filter: blur(4px);
+            animation: driftCloud 25s linear infinite;
+        }
+        .mountain .cloud { height: 90px; }
+        .arctic .cloud { height: 60px; }
+        .arctic .ice-crystal {
+            position: absolute;
+            color: rgba(255,255,255,0.9);
+            font-size: 1.5em;
+            animation: sparkle 4s ease-in-out infinite;
+        }
+        @keyframes bubble-rise {
+            0% { opacity: 0; transform: translateY(0) scale(0.8); }
+            25% { opacity: 0.6; }
+            100% { opacity: 0; transform: translateY(-220px) scale(1.1); }
+        }
+        @keyframes driftCloud {
+            0% { transform: translateX(-20%); }
+            100% { transform: translateX(120%); }
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.4; transform: scale(0.9) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.1) rotate(15deg); }
         }
         footer {
             position: fixed;
@@ -232,6 +290,23 @@
             display: flex;
             gap: 20px;
         }
+        .learn-button-top {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.95);
+            color: #111;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        }
+        .learn-button-top svg {
+            width: 18px;
+            height: 18px;
+            margin-left: 10px;
+        }
         .footer-links a {
             color: white;
             text-decoration: none;
@@ -254,7 +329,15 @@
     </style>
 </head>
 <body>
-    <button class="back-button" onclick="window.location.href='index.html'">← Back to Welcome</button>
+    <div class="top-bar">
+        <button class="back-button" onclick="window.location.href='index.html'">← Back</button>
+        <a class="learn-button-top" href="https://www.netflix.com/title/80049832" target="_blank">
+            Watch Our Planet
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 17l6-5-6-5v10z"/>
+            </svg>
+        </a>
+    </div>
 
     <div class="hero">
         <img id="hero-image" src="" alt="">
@@ -312,7 +395,37 @@
                 location: "Indian Ocean, South Asia",
                 life: "Island life revolves around the sea, with fishing communities, coral reef conservation, and a growing tourism industry that brings diverse cultures together in harmony.",
                 features: "Overwater bungalows, vibrant coral reefs, diverse marine life including manta rays and reef sharks, and pristine white-sand beaches.",
-                image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                image: "https://afar.brightspotcdn.com/dims4/default/5896a05/2147483647/strip/false/crop/3000x2247+0+0/resize/1486x1113!/quality/90/?url=https%3A%2F%2Fk3-prod-afar-media.s3.us-west-2.amazonaws.com%2Fbrightspot%2Fb2%2Ff4%2F9a1ebe3f427f8e5eb937f8df8998%2Ftravelguides-maldives-videomediastudioeurope-shutterstock.jpg",
+                theme: "ocean"
+            },
+            polar: {
+                title: "Polar Bear",
+                subtitle: "Arctic Guardian",
+                description: "Polar bears roam the melting ice of the Arctic, relying on frozen sea platforms to hunt seals. Their survival is threatened by climate change, yet they remain one of nature's most iconic guardians.",
+                location: "Arctic Circle",
+                life: "Life in the Arctic is harsh and slow-paced, with communities adapting to extreme cold, long winter nights, and a deep respect for the ice and wildlife.",
+                features: "Apex predators, powerful swimmers, and symbols of the impact of warming oceans on fragile polar ecosystems.",
+                image: "https://churchillwild.com/wp-content/uploads/2022/10/polarbearwalkingsealriverlo.jpg",
+                theme: "arctic"
+            },
+            orangutan: {
+                title: "Bornean Orangutan",
+                subtitle: "Rainforest Tree Dweller",
+                description: "The Bornean orangutan lives high in the trees of Southeast Asia's rainforests, using intelligence and patience to forage fruit and build nests among the canopy.",
+                location: "Borneo, Indonesia",
+                life: "Orangutans spend most of their lives in the forest canopy, moving slowly from tree to tree and nurturing their young in a fragile and irreplaceable habitat.",
+                features: "A critically endangered great ape with remarkable tool use, expressive faces, and a vital role in spreading rainforest seeds.",
+                image: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Orangutan_01.jpg",
+                theme: "forest"
+            },
+            turtle: {
+                title: "Sea Turtle",
+                subtitle: "Ocean Voyager",
+                description: "Sea turtles travel thousands of miles through warm oceans, returning to sandy beaches to lay their eggs. Each migration is a vital link between marine and coastal ecosystems.",
+                location: "Coral Reefs, Australia",
+                life: "Life as a sea turtle is a long journey across ocean currents, with survival depending on healthy reefs, clean beaches, and reduced plastic pollution.",
+                features: "Ancient mariners of the sea, graceful swimmers with a life cycle that links reef, beach, and open water habitats.",
+                image: "https://cdn.shortpixel.ai/spai3/q_lossy+ret_img+to_webp/https://media.madebyteachers.com/wp-content/uploads/2024/11/08130023/seas-turtles-clipart-6.jpg",
                 theme: "ocean"
             }
         };
@@ -341,23 +454,77 @@
                     snowflake.className = 'snowflake';
                     snowflake.textContent = '❄';
                     snowflake.style.left = Math.random() * 100 + '%';
+                    snowflake.style.animationDuration = 8 + Math.random() * 8 + 's';
                     snowflake.style.animationDelay = Math.random() * 10 + 's';
+                    snowflake.style.fontSize = 14 + Math.random() * 18 + 'px';
                     document.body.appendChild(snowflake);
                 }
+                for (let i = 0; i < 6; i++) {
+                    const cloud = document.createElement('div');
+                    cloud.className = 'cloud';
+                    cloud.style.left = -200 + Math.random() * 120 + '%';
+                    cloud.style.width = 120 + Math.random() * 180 + 'px';
+                    cloud.style.top = 5 + Math.random() * 20 + '%';
+                    cloud.style.animationDuration = 20 + Math.random() * 15 + 's';
+                    document.body.appendChild(cloud);
+                }
+            } else if (info.theme === 'arctic') {
+                for (let i = 0; i < 18; i++) {
+                    const snowflake = document.createElement('div');
+                    snowflake.className = 'snowflake';
+                    snowflake.textContent = '❄';
+                    snowflake.style.left = Math.random() * 100 + '%';
+                    snowflake.style.animationDuration = 10 + Math.random() * 10 + 's';
+                    snowflake.style.animationDelay = Math.random() * 8 + 's';
+                    snowflake.style.fontSize = 16 + Math.random() * 16 + 'px';
+                    document.body.appendChild(snowflake);
+                }
+                for (let i = 0; i < 12; i++) {
+                    const crystal = document.createElement('div');
+                    crystal.className = 'ice-crystal';
+                    crystal.textContent = '❄';
+                    crystal.style.left = Math.random() * 100 + '%';
+                    crystal.style.top = 10 + Math.random() * 70 + '%';
+                    crystal.style.animationDuration = 4 + Math.random() * 4 + 's';
+                    crystal.style.animationDelay = Math.random() * 4 + 's';
+                    document.body.appendChild(crystal);
+                }
+                for (let i = 0; i < 4; i++) {
+                    const cloud = document.createElement('div');
+                    cloud.className = 'cloud';
+                    cloud.style.left = -180 + Math.random() * 130 + '%';
+                    cloud.style.width = 100 + Math.random() * 140 + 'px';
+                    cloud.style.top = 8 + Math.random() * 15 + '%';
+                    cloud.style.animationDuration = 25 + Math.random() * 12 + 's';
+                    document.body.appendChild(cloud);
+                }
             } else if (info.theme === 'forest') {
-                for (let i = 0; i < 15; i++) {
+                for (let i = 0; i < 18; i++) {
                     const leaf = document.createElement('div');
                     leaf.className = 'leaf';
                     leaf.textContent = '🍃';
                     leaf.style.left = Math.random() * 100 + '%';
                     leaf.style.top = Math.random() * 100 + '%';
+                    leaf.style.animationDuration = 6 + Math.random() * 6 + 's';
                     leaf.style.animationDelay = Math.random() * 8 + 's';
+                    leaf.style.fontSize = 18 + Math.random() * 12 + 'px';
                     document.body.appendChild(leaf);
                 }
             } else if (info.theme === 'ocean') {
                 const wave = document.createElement('div');
                 wave.className = 'wave';
                 document.body.appendChild(wave);
+                for (let i = 0; i < 20; i++) {
+                    const bubble = document.createElement('div');
+                    bubble.className = 'bubble';
+                    const size = 14 + Math.random() * 18;
+                    bubble.style.width = size + 'px';
+                    bubble.style.height = size + 'px';
+                    bubble.style.left = Math.random() * 90 + '%';
+                    bubble.style.animationDuration = 5 + Math.random() * 5 + 's';
+                    bubble.style.animationDelay = Math.random() * 6 + 's';
+                    document.body.appendChild(bubble);
+                }
             }
         } else {
             // Default or error case

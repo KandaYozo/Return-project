@@ -92,6 +92,17 @@
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             animation: slideIn 1s ease-out both;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .fact:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.2);
+        }
+        .fact.location-box {
+            cursor: pointer;
+        }
+        .fact.location-box:hover {
+            background: rgba(255,255,255,0.95);
         }
         .fact:nth-child(1) { animation-delay: 0.8s; }
         .fact:nth-child(2) { animation-delay: 1s; }
@@ -209,7 +220,7 @@
         <h2 id="subtitle"></h2>
         <p id="description"></p>
         <div class="facts">
-            <div class="fact">
+            <div class="fact location-box" id="location-fact">
                 <h3>Location</h3>
                 <p id="location"></p>
             </div>
@@ -271,6 +282,12 @@
             document.getElementById('location').textContent = info.location;
             document.getElementById('life').textContent = info.life;
             document.getElementById('features').textContent = info.features;
+
+            // Add click handler for location box
+            document.getElementById('location-fact').addEventListener('click', function() {
+                const mapsUrl = `https://www.google.com/maps?q=${encodeURIComponent(info.location)}`;
+                window.open(mapsUrl, '_blank');
+            });
 
             // Add theme-specific animations
             if (info.theme === 'mountain') {

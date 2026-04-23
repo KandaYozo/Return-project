@@ -64,6 +64,16 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
             animation: fadeInDown 1s ease-out;
         }
+        #about-title {
+            font-size: 3em;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3); }
+            to { text-shadow: 0 0 20px rgba(255,255,255,1), 0 0 30px rgba(255,255,255,0.5); }
+        }
         @keyframes fadeInDown {
             from {
                 opacity: 0;
@@ -73,8 +83,43 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
-        .content {
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }        .content {
             padding: 50px;
             max-width: 800px;
             margin: 0 auto;
@@ -87,12 +132,14 @@
             font-size: 2.5em;
             margin-bottom: 20px;
             color: #093a68;
+            animation: slideInLeft 1s ease-out 0.5s both;
         }
         .content p {
             font-size: 1.2em;
             line-height: 1.6;
             margin-bottom: 20px;
             color: #093a68;
+            animation: slideInRight 1s ease-out 0.7s both;
         }
         .cta-button {
             display: inline-block;
@@ -105,6 +152,7 @@
             font-weight: bold;
             transition: all 0.3s ease;
             margin-top: 30px;
+            animation: bounceIn 1s ease-out 1s both;
         }
         .cta-button:hover {
             background: #1e5a8a;
@@ -123,15 +171,43 @@
             0%, 100% { transform: translateX(0); }
             50% { transform: translateX(-50px); }
         }
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        .shape:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            top: 20%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+        .shape:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            bottom: 15%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
         }
         footer {
             position: fixed;
@@ -181,13 +257,18 @@
     </style>
 </head>
 <body class="ocean">
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
     <div class="top-bar">
         <button class="back-button" onclick="window.location.href='index.html'">← Back</button>
     </div>
 
     <div class="hero">
         <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Earth from space">
-        <h1>About Us</h1>
+        <div id="about-title"></div>
     </div>
 
     <div class="content">
@@ -224,7 +305,18 @@
                 </a>
             </div>
         </div>
-    </footer>
+    <script>
+        const text = "About Us";
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                document.getElementById("about-title").innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 150);
+            }
+        }
+        window.onload = typeWriter;
+    </script>
 
 </body>
 </html>

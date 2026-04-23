@@ -102,17 +102,18 @@
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             animation: slideIn 1s ease-out both;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
         }
         .fact:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 12px rgba(0,0,0,0.2);
+            background: rgba(255,255,255,1);
+            transform: scale(1.05);
         }
         .fact.location-box {
             cursor: pointer;
         }
         .fact.location-box:hover {
-            background: rgba(255,255,255,0.95);
+            background: rgba(255,255,255,1);
+            transform: scale(1.05);
         }
         .fact:nth-child(1) { animation-delay: 0.8s; }
         .fact:nth-child(2) { animation-delay: 1s; }
@@ -216,6 +217,14 @@
             background: rgba(255,255,255,0.95);
             border-left: 5px solid #5db3e6;
         }
+        .mountain .fact:hover { background: #667eea; color: white; }
+        .forest .fact:hover { background: #11998e; color: white; }
+        .ocean .fact:hover { background: #2d72b2; color: white; }
+        .arctic .fact:hover { background: #5db3e6; color: white; }
+        .mountain .fact.location-box:hover { background: #667eea; color: white; }
+        .forest .fact.location-box:hover { background: #11998e; color: white; }
+        .ocean .fact.location-box:hover { background: #2d72b2; color: white; }
+        .arctic .fact.location-box:hover { background: #5db3e6; color: white; }
         .ocean .wave {
             position: absolute;
             bottom: 0;

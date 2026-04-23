@@ -76,10 +76,12 @@
             border-radius: 50%;
             border: 3px solid #fff;
             box-shadow: 0 0 15px rgba(255,255,255,0.3);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
         }
         .images img:hover {
             transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(255,255,255,0.5);
         }
         .floating-shapes {
             position: absolute;
@@ -130,9 +132,9 @@
     <div id="welcome"></div>
     <div class="subtitle">Explore the beauty of the world</div>
     <div class="images">
-        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Mountain">
-        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Forest">
-        <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Ocean">
+        <a href="insight.html?pic=mountain"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Mountain"></a>
+        <a href="insight.html?pic=forest"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Forest"></a>
+        <a href="insight.html?pic=ocean"><img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Ocean"></a>
     </div>
 
     <script>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insight</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow-x: hidden;
+            transition: all 1s ease;
+        }
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.8);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        .back-button:hover {
+            background: rgba(255,255,255,1);
+            transform: scale(1.05);
+        }
+        .hero {
+            position: relative;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+        .hero img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        .hero h1 {
+            font-size: 4em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: fadeInDown 1s ease-out;
+        }
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .content {
+            padding: 50px;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+        .content h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .content p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .fact {
+            background: rgba(255,255,255,0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            animation: slideIn 1s ease-out both;
+        }
+        .fact:nth-child(1) { animation-delay: 0.8s; }
+        .fact:nth-child(2) { animation-delay: 1s; }
+        .fact:nth-child(3) { animation-delay: 1.2s; }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        /* Mountain theme */
+        .mountain {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .mountain .hero {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3));
+        }
+        .mountain .content {
+            color: #333;
+        }
+        .mountain .fact {
+            background: rgba(255,255,255,0.95);
+            border-left: 5px solid #667eea;
+        }
+        .mountain .snowflake {
+            position: absolute;
+            color: white;
+            font-size: 2em;
+            animation: snowfall 10s linear infinite;
+        }
+        @keyframes snowfall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        /* Forest theme */
+        .forest {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+        .forest .hero {
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2));
+        }
+        .forest .content {
+            color: #2d5016;
+        }
+        .forest .fact {
+            background: rgba(255,255,255,0.95);
+            border-left: 5px solid #11998e;
+        }
+        .forest .leaf {
+            position: absolute;
+            color: #38ef7d;
+            font-size: 2em;
+            animation: flutter 8s ease-in-out infinite;
+        }
+        @keyframes flutter {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(5deg); }
+            50% { transform: translateY(-20px) rotate(0deg); }
+            75% { transform: translateY(-10px) rotate(-5deg); }
+        }
+
+        /* Ocean theme */
+        .ocean {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .ocean .hero {
+            background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1));
+        }
+        .ocean .content {
+            color: #1e3a8a;
+        }
+        .ocean .fact {
+            background: rgba(255,255,255,0.95);
+            border-left: 5px solid #667eea;
+        }
+        .ocean .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,60 C300,100 600,20 900,60 C1050,80 1200,40 1200,60 L1200,120 L0,120 Z" fill="rgba(255,255,255,0.3)"></path></svg>') repeat-x;
+            animation: wave 10s ease-in-out infinite;
+        }
+        @keyframes wave {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-50px); }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="window.location.href='index.html'">← Back to Welcome</button>
+
+    <div class="hero">
+        <img id="hero-image" src="" alt="">
+        <h1 id="title"></h1>
+    </div>
+
+    <div class="content">
+        <h2 id="subtitle"></h2>
+        <p id="description"></p>
+        <div class="facts">
+            <div class="fact">
+                <h3>Location</h3>
+                <p id="location"></p>
+            </div>
+            <div class="fact">
+                <h3>Life & Culture</h3>
+                <p id="life"></p>
+            </div>
+            <div class="fact">
+                <h3>Unique Features</h3>
+                <p id="features"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const pic = urlParams.get('pic');
+
+        const data = {
+            mountain: {
+                title: "Swiss Alps",
+                subtitle: "Majestic Mountain Peaks",
+                description: "The Swiss Alps are a majestic mountain range that stretches across Switzerland, offering breathtaking views and unparalleled natural beauty. These towering peaks have inspired artists, adventurers, and nature lovers for centuries.",
+                location: "Switzerland, Central Europe",
+                life: "Life in the Swiss Alps is characterized by peaceful alpine villages, fresh mountain air, and a strong connection to nature. Locals enjoy outdoor activities like skiing, hiking, and traditional alpine culture.",
+                features: "Home to the Matterhorn, pristine lakes, and diverse wildlife including ibex and chamois.",
+                image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                theme: "mountain"
+            },
+            forest: {
+                title: "Amazon Rainforest",
+                subtitle: "The Lungs of the Earth",
+                description: "The Amazon Rainforest is the largest tropical rainforest on Earth, spanning nine countries in South America. It's a biodiversity hotspot and plays a crucial role in regulating the planet's climate.",
+                location: "Brazil and surrounding South American countries",
+                life: "Indigenous communities have lived in harmony with the forest for thousands of years, practicing sustainable living and maintaining rich cultural traditions amidst incredible biodiversity.",
+                features: "Over 390 billion trees, thousands of species of plants and animals, and indigenous tribes with deep knowledge of medicinal plants.",
+                image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                theme: "forest"
+            },
+            ocean: {
+                title: "Maldives",
+                subtitle: "Paradise Islands",
+                description: "The Maldives is an archipelago of 1,192 coral islands in the Indian Ocean, known for its stunning beaches, crystal-clear waters, and luxurious resorts. It's a dream destination for relaxation and water sports.",
+                location: "Indian Ocean, South Asia",
+                life: "Island life revolves around the sea, with fishing communities, coral reef conservation, and a growing tourism industry that brings diverse cultures together in harmony.",
+                features: "Overwater bungalows, vibrant coral reefs, diverse marine life including manta rays and reef sharks, and pristine white-sand beaches.",
+                image: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+                theme: "ocean"
+            }
+        };
+
+        if (data[pic]) {
+            const info = data[pic];
+            document.body.classList.add(info.theme);
+            document.getElementById('hero-image').src = info.image;
+            document.getElementById('title').textContent = info.title;
+            document.getElementById('subtitle').textContent = info.subtitle;
+            document.getElementById('description').textContent = info.description;
+            document.getElementById('location').textContent = info.location;
+            document.getElementById('life').textContent = info.life;
+            document.getElementById('features').textContent = info.features;
+
+            // Add theme-specific animations
+            if (info.theme === 'mountain') {
+                for (let i = 0; i < 20; i++) {
+                    const snowflake = document.createElement('div');
+                    snowflake.className = 'snowflake';
+                    snowflake.textContent = '❄';
+                    snowflake.style.left = Math.random() * 100 + '%';
+                    snowflake.style.animationDelay = Math.random() * 10 + 's';
+                    document.body.appendChild(snowflake);
+                }
+            } else if (info.theme === 'forest') {
+                for (let i = 0; i < 15; i++) {
+                    const leaf = document.createElement('div');
+                    leaf.className = 'leaf';
+                    leaf.textContent = '🍃';
+                    leaf.style.left = Math.random() * 100 + '%';
+                    leaf.style.top = Math.random() * 100 + '%';
+                    leaf.style.animationDelay = Math.random() * 8 + 's';
+                    document.body.appendChild(leaf);
+                }
+            } else if (info.theme === 'ocean') {
+                const wave = document.createElement('div');
+                wave.className = 'wave';
+                document.body.appendChild(wave);
+            }
+        } else {
+            // Default or error case
+            document.getElementById('title').textContent = "Insight Page";
+            document.getElementById('subtitle').textContent = "Explore Nature's Wonders";
+            document.getElementById('description').textContent = "Click on images from the welcome page to learn more about these amazing places!";
+        }
+    </script>
+</body>
+</html>
